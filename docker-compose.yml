@@ -5,8 +5,8 @@ services:
     image: mysql:8.0
     container_name: tora-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: Yj06911991
-      MYSQL_DATABASE: tora_ho
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       TZ: Asia/Tokyo
     ports:
       - "3307:3306"
@@ -26,8 +26,8 @@ services:
       - db
     environment:
       DATABASE_HOST: db
-      DATABASE_USERNAME: toraho
-      DATABASE_PASSWORD: teru0840
+      DATABASE_USERNAME: ${DB_USERNAME}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
 
   frontend:
     build: ./frontend
