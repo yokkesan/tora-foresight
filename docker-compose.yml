@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: tora-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Yj06911991
+      MYSQL_DATABASE: tora_ho
+      TZ: Asia/Tokyo
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: tora-backend
+    command: bash -c "bundle install && rails s -b 0.0.0.0"
+    volumes:
+      - ./backend:/app
+      - bundle-volume:/usr/local/bundle
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: toraho
+      DATABASE_PASSWORD: teru0840
+
+  frontend:
+    build: ./frontend
+    container_name: tora-frontend
+    command: yarn dev
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  db-data:
+  bundle-volume:
