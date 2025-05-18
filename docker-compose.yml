@@ -14,11 +14,11 @@ services:
       - db-data:/var/lib/mysql
 
   backend:
-    build: ./backend
+    build: ./src/backend
     container_name: tora-backend
     command: bash -c "bundle install && rails s -b 0.0.0.0"
     volumes:
-      - ./backend:/app
+      - ./src/backend:/app         # ✅ 修正
       - bundle-volume:/usr/local/bundle
     ports:
       - "3001:3000"
@@ -30,11 +30,11 @@ services:
       DATABASE_PASSWORD: ${DB_PASSWORD}
 
   frontend:
-    build: ./frontend
+    build: ./src/frontend
     container_name: tora-frontend
     command: yarn dev
     volumes:
-      - ./frontend:/app
+      - ./src/frontend:/app        # ✅ 修正
     ports:
       - "5173:5173"
     depends_on:
